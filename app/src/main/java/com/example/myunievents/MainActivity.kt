@@ -11,6 +11,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myunievents.screens.*
 import com.example.myunievents.ui.theme.MyUniEventsTheme
+import com.example.myunievents.ui.navigation.Screen
+import com.example.myunievents.ui.screens.BookEventScreen
+import com.example.myunievents.ui.screens.HomeScreen
+import com.example.myunievents.ui.screens.LoginScreen
+import com.example.myunievents.ui.screens.ProfileScreen
+import com.example.myunievents.ui.screens.RegisterScreen
+import com.example.myunievents.ui.screens.TrackEventScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

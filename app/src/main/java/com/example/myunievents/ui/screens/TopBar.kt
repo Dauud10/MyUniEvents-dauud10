@@ -1,14 +1,13 @@
-package com.example.myunievents.screens
+package com.example.myunievents.ui.screens
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myunievents.ui.theme.HeaderGreen
 import com.example.myunievents.ui.theme.TextWhite
+import com.example.myunievents.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

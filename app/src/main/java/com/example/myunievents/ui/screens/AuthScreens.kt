@@ -1,4 +1,4 @@
-package com.example.myunievents.screens
+package com.example.myunievents.ui.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -17,6 +17,7 @@ import com.example.myunievents.firebase.AuthManager
 import com.example.myunievents.ui.theme.ButtonRed
 import com.example.myunievents.ui.theme.MainGreen
 import com.example.myunievents.ui.theme.TextBlack
+import com.example.myunievents.ui.navigation.Screen
 
 @Composable
 fun LoginScreen(navController: NavController) {

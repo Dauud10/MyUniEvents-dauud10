@@ -1,4 +1,4 @@
-package com.example.myunievents.screens
+package com.example.myunievents.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +21,7 @@ import com.example.myunievents.ui.theme.ButtonRed
 import com.example.myunievents.ui.theme.HeaderGreen
 import com.example.myunievents.ui.theme.MainGreen
 import com.example.myunievents.ui.theme.TextBlack
+import com.example.myunievents.ui.navigation.Screen
 
 @Composable
 fun HomeScreen(navController: NavController) {
