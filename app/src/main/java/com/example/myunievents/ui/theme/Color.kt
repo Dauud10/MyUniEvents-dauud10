@@ -2,10 +2,12 @@ package com.example.myunievents.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// MAIN APP COLOURS (matched from your Figma)
+val MainGreen = Color(0xFF7BCF8B)        // Light green background
+val HeaderGreen = Color(0xFF0C5C3C)      // Top bar + footer dark green
+val ButtonRed = Color(0xFFE32626)        // Red buttons
+val TextBlack = Color(0xFF000000)        // Main text color
+val TextWhite = Color(0xFFFFFFFF)        // White text/icons
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// OPTIONAL TUS ACCENT
+val GoldAccent = Color(0xFFD1A653)
