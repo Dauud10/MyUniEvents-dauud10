@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myunievents.ui.screens.ProfileScreen
 import com.example.myunievents.ui.navigation.Screen
 import com.example.myunievents.ui.screens.*
 import com.example.myunievents.ui.theme.MyUniEventsTheme
@@ -31,12 +32,12 @@ fun MyUniEventsApp() {
                 navController = navController,
                 startDestination = Screen.Login.route
             ) {
-                composable(Screen.Login.route)        { LoginScreen(navController) }
-                composable(Screen.Register.route)     { RegisterScreen(navController) }
-                composable(Screen.Home.route)         { HomeScreen(navController) }
-                composable(Screen.MyEvents.route)       { EventsListScreen(navController) }
-                composable(Screen.BookEvent.route)    { BookEventScreen(navController) }
-                composable(Screen.Profile.route)      { ProfileScreen(navController) }
+                composable(Screen.Login.route)       { LoginScreen(navController) }
+                composable(Screen.Register.route)    { RegisterScreen(navController) }
+                composable(Screen.Home.route)        { HomeScreen(navController) }
+                composable(Screen.MyEvents.route)    { EventsListScreen(navController) }
+                composable(Screen.BookEvent.route)   { BookEventScreen(navController) }
+                composable(Screen.Profile.route)     { ProfileScreen(navController) }
             }
         }
     }
