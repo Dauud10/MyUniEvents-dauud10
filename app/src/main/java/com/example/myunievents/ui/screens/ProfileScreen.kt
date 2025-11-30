@@ -1,4 +1,4 @@
-package com.example.myunievents.screens
+package com.example.myunievents.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -90,7 +90,7 @@ fun ProfileScreen(navController: NavController) {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_user),
+                    painter = painterResource(id = R.drawable.ic_users),
                     contentDescription = "User Icon",
                     tint = TextWhite,
                     modifier = Modifier.size(60.dp)
