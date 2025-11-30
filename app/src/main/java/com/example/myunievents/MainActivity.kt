@@ -13,10 +13,17 @@ import com.example.myunievents.ui.screens.ProfileScreen
 import com.example.myunievents.ui.navigation.Screen
 import com.example.myunievents.ui.screens.*
 import com.example.myunievents.ui.theme.MyUniEventsTheme
+import com.example.myunievents.data.AppDatabase
+import com.example.myunievents.data.EventRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize ROOM + Repository
+        val database = AppDatabase.getDatabase(this)
+        EventRepository.initialize(database.eventDao())
+
         setContent { MyUniEventsApp() }
     }
 }

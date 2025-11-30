@@ -6,39 +6,31 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccessTime
-import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.myunievents.data.AppDatabase
 import com.example.myunievents.data.Event
+import com.example.myunievents.data.EventRepository
 import com.example.myunievents.ui.theme.*
-import kotlinx.coroutines.launch
 
 @Composable
 fun EventsListScreen(navController: NavController) {
 
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
-    val dao = remember { AppDatabase.getDatabase(context).eventDao() }
-
-    var events by remember { mutableStateOf<List<Event>>(emptyList()) }
-
-    // Load data from Room
-    LaunchedEffect(Unit) {
-        scope.launch {
-            events = dao.getAllEvents()
-        }
-    }
+    val events by EventRepository
+        .getAllEvents()
+        .collectAsState(initial = emptyList())
 
     Scaffold { padding ->
         Column(
@@ -57,9 +49,7 @@ fun EventsListScreen(navController: NavController) {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(events) { event ->
                     EventCard(event)
                 }
@@ -91,7 +81,7 @@ fun EventCard(event: Event) {
 
         // TIME
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Filled.AccessTime, contentDescription = null, tint = TextBlack)
+            Icon(Icons.Filled.Schedule, contentDescription = null, tint = TextBlack)
             Spacer(modifier = Modifier.width(8.dp))
             Text(event.time, color = TextBlack)
         }
@@ -100,7 +90,7 @@ fun EventCard(event: Event) {
 
         // DATE
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Filled.CalendarMonth, contentDescription = null, tint = TextBlack)
+            Icon(Icons.Filled.Event, contentDescription = null, tint = TextBlack)
             Spacer(modifier = Modifier.width(8.dp))
             Text(event.date, color = TextBlack)
         }
