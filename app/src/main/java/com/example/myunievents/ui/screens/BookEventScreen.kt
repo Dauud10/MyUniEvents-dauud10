@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import com.example.myunievents.R
 import com.example.myunievents.data.Event
 import com.example.myunievents.data.EventRepository
+import com.example.myunievents.ui.navigation.Screen
 import com.example.myunievents.ui.theme.ButtonRed
 import com.example.myunievents.ui.theme.HeaderGreen
 import com.example.myunievents.ui.theme.MainGreen
