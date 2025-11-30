@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
-    alias(libs.plugins.google.services) //  for Firebase
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -56,6 +56,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    // Material Icons Extended
+    implementation("androidx.compose.material:material-icons-extended:1.6.5")
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -70,12 +73,11 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
-    // Firebase (Auth + Firestore)
+    // Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
 
     // Navigation for Jetpack Compose
     implementation("androidx.navigation:navigation-compose:2.7.7")
-
 }
