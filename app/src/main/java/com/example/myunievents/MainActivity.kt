@@ -34,7 +34,7 @@ fun MyUniEventsApp() {
                 composable(Screen.Login.route)        { LoginScreen(navController) }
                 composable(Screen.Register.route)     { RegisterScreen(navController) }
                 composable(Screen.Home.route)         { HomeScreen(navController) }
-                composable(Screen.TrackEvent.route)   { TrackEventScreen(navController) }
+                composable(Screen.MyEvents.route)       { EventsListScreen(navController) }
                 composable(Screen.BookEvent.route)    { BookEventScreen(navController) }
                 composable(Screen.Profile.route)      { ProfileScreen(navController) }
             }

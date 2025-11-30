@@ -4,10 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,10 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.myunievents.ui.theme.ButtonRed
-import com.example.myunievents.ui.theme.HeaderGreen
-import com.example.myunievents.ui.theme.MainGreen
-import com.example.myunievents.ui.theme.TextBlack
+import com.example.myunievents.ui.theme.*
 import com.example.myunievents.ui.navigation.Screen
 
 @Composable
@@ -34,21 +28,16 @@ fun HomeScreen(navController: NavController) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // ========================
+
             // HEADER
-            // ========================
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
                     .background(HeaderGreen)
-                    .clip(
-                        RoundedCornerShape(
-                            bottomStart = 40.dp,
-                            bottomEnd = 40.dp
-                        )
-                    )
+                    .clip(RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
             ) {
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -56,7 +45,9 @@ fun HomeScreen(navController: NavController) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+
                         Text(
                             text = "HOME",
                             color = TextBlack,
@@ -67,11 +58,15 @@ fun HomeScreen(navController: NavController) {
                         Text(
                             text = "EVENTS",
                             color = TextBlack,
-                            fontSize = 18.sp
+                            fontSize = 18.sp,
+                            modifier = Modifier.clickable {
+                                navController.navigate(Screen.MyEvents.route)
+                            }
                         )
                     }
 
                     Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+
                         Text(
                             text = "PROFILE",
                             color = TextBlack,
@@ -95,15 +90,14 @@ fun HomeScreen(navController: NavController) {
                 }
             }
 
-            // ========================
             // MAIN CONTENT
-            // ========================
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 60.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
                 Text(
                     text = "WELCOME TO MYUNIEVENTS APP",
                     fontSize = 20.sp,
@@ -138,48 +132,44 @@ fun HomeScreen(navController: NavController) {
                         Text("BOOK EVENT", color = TextBlack)
                     }
                 }
-
-                Spacer(modifier = Modifier.height(60.dp))
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // ========================
             // FOOTER
-            // ========================
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(HeaderGreen)
-                    .clip(
-                        RoundedCornerShape(
-                            topStart = 40.dp,
-                            topEnd = 40.dp
-                        )
-                    )
+                    .clip(RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp))
                     .padding(horizontal = 24.dp, vertical = 16.dp)
             ) {
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top
                 ) {
 
-                    // LEFT COLUMN
+                    // LEFT
                     Column {
                         Text("© 2025 TUS MyUniEvents App", color = TextBlack, fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Contact US", color = TextBlack, fontSize = 14.sp)
+
+                        Text("Contact Us", color = TextBlack, fontSize = 14.sp)
                         Row {
                             Text("Email | ", color = TextBlack)
                             Text("PhoneNo", color = TextBlack)
                         }
                     }
 
-                    // CENTER COLUMN
+                    // CENTER
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
                         Text("About", color = TextBlack, fontSize = 14.sp)
+
                         Spacer(modifier = Modifier.height(8.dp))
+
                         Text(
                             text = "Discover upcoming events at TUS\nand stay connected with campus life.",
                             color = TextBlack,
@@ -188,10 +178,11 @@ fun HomeScreen(navController: NavController) {
                         )
                     }
 
-                    // RIGHT COLUMN
+                    // RIGHT
                     Column(horizontalAlignment = Alignment.End) {
                         Text("Social Media", color = TextBlack, fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(8.dp))
+
                         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                             Text("📘", fontSize = 20.sp)
                             Text("📸", fontSize = 20.sp)
