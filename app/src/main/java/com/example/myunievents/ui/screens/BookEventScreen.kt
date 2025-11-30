@@ -13,11 +13,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myunievents.R
+import com.example.myunievents.data.Event
+import com.example.myunievents.data.EventRepository
 import com.example.myunievents.ui.theme.*
+
+import kotlinx.coroutines.launch
 
 @Composable
 fun BookEventScreen(navController: NavController) {
@@ -27,8 +32,12 @@ fun BookEventScreen(navController: NavController) {
     var eventTime by remember { mutableStateOf("") }
     var eventLocation by remember { mutableStateOf("") }
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     Scaffold(
-        containerColor = MainGreen
+        containerColor = MainGreen,
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
 
         Column(
@@ -108,7 +117,7 @@ fun BookEventScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 20.dp),
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                textAlign = TextAlign.Center
             )
 
             // ---------- FORM ----------
@@ -132,9 +141,14 @@ fun BookEventScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
+
+                // CANCEL BUTTON
                 Button(
                     onClick = {
-                        eventName = ""; eventDate = ""; eventTime = ""; eventLocation = ""
+                        eventName = ""
+                        eventDate = ""
+                        eventTime = ""
+                        eventLocation = ""
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
                     shape = RoundedCornerShape(30.dp),
@@ -143,8 +157,33 @@ fun BookEventScreen(navController: NavController) {
                     Text("Cancel", color = TextBlack)
                 }
 
+                // BOOK EVENT BUTTON (SAVE TO ROOM)
                 Button(
-                    onClick = { /* TODO: saving later */ },
+                    onClick = {
+
+                        if (eventName.isBlank() || eventDate.isBlank() ||
+                            eventTime.isBlank() || eventLocation.isBlank()
+                        ) {
+                            scope.launch {
+                                snackbarHostState.showSnackbar("Please fill all fields")
+                            }
+                        } else {
+
+                            val newEvent = Event(
+                                name = eventName,
+                                date = eventDate,
+                                time = eventTime,
+                                location = eventLocation
+                            )
+
+                            scope.launch {
+                                EventRepository.insertEvent(newEvent)
+                                snackbarHostState.showSnackbar("Event booked!")
+                                navController.popBackStack()
+                            }
+                        }
+
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
                     shape = RoundedCornerShape(30.dp),
                     modifier = Modifier.width(140.dp)
@@ -157,36 +196,6 @@ fun BookEventScreen(navController: NavController) {
 
             // ---------- FOOTER ----------
             FooterSection()
-        }
-    }
-}
-
-@Composable
-fun FooterSection() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(140.dp)
-            .background(HeaderGreen)
-            .clip(
-                RoundedCornerShape(
-                    topStart = 40.dp,
-                    topEnd = 40.dp
-                )
-            )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 24.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("© 2025 TUS MyUniEvents App", color = TextBlack)
-            Text(
-                "Discover upcoming events at TUS and stay connected with campus life.",
-                color = TextBlack,
-                fontSize = 12.sp
-            )
         }
     }
 }
