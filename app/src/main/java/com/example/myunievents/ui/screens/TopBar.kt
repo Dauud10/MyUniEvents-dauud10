@@ -8,10 +8,11 @@ import androidx.navigation.NavController
 import com.example.myunievents.ui.theme.HeaderGreen
 import com.example.myunievents.ui.theme.TextWhite
 import com.example.myunievents.ui.navigation.Screen
+import com.example.myunievents.ui.theme.ButtonRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyUniTopBar(
+fun TopBar(
     navController: NavController,
     currentScreen: Screen
 ) {
@@ -29,13 +30,13 @@ fun MyUniTopBar(
         ),
         actions = {
             TextButton(onClick = { navController.navigate(Screen.Home.route) }) {
-                Text("HOME", color = TextWhite)
+                Text("HOME", color = if (currentScreen == Screen.Home) ButtonRed else TextWhite)
             }
-            TextButton(onClick = { navController.navigate(Screen.TrackEvent.route) }) {
-                Text("EVENTS", color = TextWhite)
+            TextButton(onClick = { navController.navigate(Screen.MyEvents.route) }) {
+                Text("EVENTS", color = if (currentScreen == Screen.MyEvents) ButtonRed else TextWhite)
             }
             TextButton(onClick = { navController.navigate(Screen.Profile.route) }) {
-                Text("PROFILE", color = TextWhite)
+                Text("PROFILE", color = if (currentScreen == Screen.Profile) ButtonRed else TextWhite)
             }
         }
     )
