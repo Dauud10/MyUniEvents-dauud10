@@ -25,6 +25,10 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "myunievents_db"
                 ).build()
+
+                // IMPORTANT: Initialize repository
+                EventRepository.initialize(instance.eventDao())
+
                 INSTANCE = instance
                 instance
             }

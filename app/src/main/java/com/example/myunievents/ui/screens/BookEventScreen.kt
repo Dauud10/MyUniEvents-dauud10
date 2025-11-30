@@ -1,4 +1,4 @@
-package com.example.myunievents.screens
+package com.example.myunievents.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,8 +20,10 @@ import androidx.navigation.NavController
 import com.example.myunievents.R
 import com.example.myunievents.data.Event
 import com.example.myunievents.data.EventRepository
-import com.example.myunievents.ui.theme.*
-
+import com.example.myunievents.ui.theme.ButtonRed
+import com.example.myunievents.ui.theme.HeaderGreen
+import com.example.myunievents.ui.theme.MainGreen
+import com.example.myunievents.ui.theme.TextBlack
 import kotlinx.coroutines.launch
 
 @Composable
@@ -66,7 +68,12 @@ fun BookEventScreen(navController: NavController) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("EVENTS", color = TextBlack, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    Text(
+                        "EVENTS",
+                        color = TextBlack,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
 
                     Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
                         Text(
@@ -127,7 +134,6 @@ fun BookEventScreen(navController: NavController) {
                     .padding(horizontal = 30.dp),
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-
                 LabeledTextField(label = "Select Event:", value = eventName) { eventName = it }
                 LabeledTextField(label = "Select Date:", value = eventDate) { eventDate = it }
                 LabeledTextField(label = "Select Time:", value = eventTime) { eventTime = it }
@@ -160,7 +166,6 @@ fun BookEventScreen(navController: NavController) {
                 // BOOK EVENT BUTTON (SAVE TO ROOM)
                 Button(
                     onClick = {
-
                         if (eventName.isBlank() || eventDate.isBlank() ||
                             eventTime.isBlank() || eventLocation.isBlank()
                         ) {
@@ -168,7 +173,6 @@ fun BookEventScreen(navController: NavController) {
                                 snackbarHostState.showSnackbar("Please fill all fields")
                             }
                         } else {
-
                             val newEvent = Event(
                                 name = eventName,
                                 date = eventDate,
@@ -182,7 +186,6 @@ fun BookEventScreen(navController: NavController) {
                                 navController.popBackStack()
                             }
                         }
-
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
                     shape = RoundedCornerShape(30.dp),
@@ -209,5 +212,27 @@ fun LabeledTextField(label: String, value: String, onChange: (String) -> Unit) {
             onValueChange = onChange,
             modifier = Modifier.fillMaxWidth()
         )
+    }
+}
+
+@Composable
+fun FooterSection() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(140.dp)
+            .background(HeaderGreen)
+            .clip(
+                RoundedCornerShape(
+                    topStart = 40.dp,
+                    topEnd = 40.dp
+                )
+            )
+            .padding(22.dp)
+    ) {
+        Column {
+            Text("© 2025 TUS MyUniEvents App", color = TextBlack, fontWeight = FontWeight.Medium)
+            Text("Discover upcoming events and stay connected.", color = TextBlack)
+        }
     }
 }

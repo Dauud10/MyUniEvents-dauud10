@@ -11,3 +11,8 @@ val TextWhite = Color(0xFFFFFFFF)        // White text/icons
 
 // OPTIONAL TUS ACCENT
 val GoldAccent = Color(0xFFD1A653)
+
+
+val DarkBackground = Color(0xFF0F0F0F)
+val DarkCard = Color(0xFF1F1F1F)
+val DarkText = Color(0xFFFFFFFF)

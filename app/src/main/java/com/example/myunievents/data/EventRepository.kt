@@ -1,8 +1,20 @@
 package com.example.myunievents.data
 
-class EventRepository(private val eventDao: EventDao) {
+import kotlinx.coroutines.flow.Flow
 
-    suspend fun addEvent(event: Event) = eventDao.insertEvent(event)
+object EventRepository {
 
-    suspend fun getEvents() = eventDao.getAllEvents()
+    private lateinit var dao: EventDao
+
+    fun initialize(eventDao: EventDao) {
+        dao = eventDao
+    }
+
+    suspend fun insertEvent(event: Event) {
+        dao.insertEvent(event)
+    }
+
+    fun getAllEvents(): Flow<List<Event>> {
+        return dao.getAllEvents()
+    }
 }

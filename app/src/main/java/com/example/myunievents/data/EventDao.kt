@@ -1,6 +1,7 @@
 package com.example.myunievents.data
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EventDao {
@@ -15,5 +16,5 @@ interface EventDao {
     suspend fun deleteEvent(event: Event)
 
     @Query("SELECT * FROM events ORDER BY id DESC")
-    suspend fun getAllEvents(): List<Event>
+    fun getAllEvents(): Flow<List<Event>>
 }
