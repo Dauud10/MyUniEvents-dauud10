@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +24,7 @@ import com.example.myunievents.ui.theme.HeaderGreen
 import com.example.myunievents.ui.theme.MainGreen
 import com.example.myunievents.ui.theme.TextBlack
 import com.example.myunievents.ui.theme.TextWhite
+import org.w3c.dom.Text
 
 @Composable
 fun ProfileScreen(

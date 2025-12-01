@@ -1,5 +1,6 @@
 package com.example.myunievents.ui.screens
 
+import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,6 +51,7 @@ import com.example.myunievents.ui.theme.HeaderGreen
 import com.example.myunievents.ui.theme.MainGreen
 import com.example.myunievents.ui.theme.TextBlack
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 
 
 @Composable

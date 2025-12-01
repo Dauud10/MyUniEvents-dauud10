@@ -16,7 +16,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -46,49 +45,43 @@ android {
 
 dependencies {
 
-    // Jetpack + Compose
+    // CORE + LIFECYCLE
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
 
-    // Compose BOM (CORRECT)
+    // COMPOSE (via BOM)
     implementation(platform(libs.androidx.compose.bom))
-
-    // Compose core
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.runtime.saveable)
 
-    // FIX 1 — Saveable state (for rememberSaveable)
-    implementation("androidx.compose.runtime:runtime-saveable")
+    // Material Icons Extended (version comes from BOM)
+    implementation("androidx.compose.material:material-icons-extended")
 
-    // FIX 2 — Foundation (for Modifier.size, layouts, Row/Column)
-    implementation("androidx.compose.foundation:foundation")
+    // NAVIGATION COMPOSE
+    implementation(libs.androidx.navigation.compose)
 
-    // Material Icons Extended
-    implementation("androidx.compose.material:material-icons-extended:1.6.5")
+    // ROOM
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
-    // Testing
+    // FIREBASE
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+
+    // TESTING
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    // ROOM Database
-    implementation("androidx.room:room-runtime:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-
-    // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.firebase:firebase-firestore-ktx")
-
-    // Navigation for Jetpack Compose
-    implementation("androidx.navigation:navigation-compose:2.7.7")
 }
-
