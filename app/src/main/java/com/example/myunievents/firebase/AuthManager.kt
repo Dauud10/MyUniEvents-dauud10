@@ -34,7 +34,7 @@ object AuthManager {
 
     fun currentUser() = auth.currentUser
 
-    // 🔧 NEW: update display name
+    // update display name
     suspend fun updateDisplayName(newName: String): Result<Unit> {
         val user = auth.currentUser ?: return Result.failure(IllegalStateException("No user logged in"))
         return try {
@@ -48,7 +48,7 @@ object AuthManager {
         }
     }
 
-    // 🔧 NEW: update password
+    // update password
     suspend fun updatePassword(newPassword: String): Result<Unit> {
         val user = auth.currentUser ?: return Result.failure(IllegalStateException("No user logged in"))
         return try {

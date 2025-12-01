@@ -36,9 +36,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myunievents.data.Event
 import com.example.myunievents.data.EventRepository
-import com.example.myunievents.ui.navigation.Screen
-import com.example.myunievents.ui.theme.MainGreen
-import com.example.myunievents.ui.theme.TextBlack
 
 @Composable
 fun EventsListScreen(navController: NavController) {
@@ -50,37 +47,35 @@ fun EventsListScreen(navController: NavController) {
         .collectAsState(initial = emptyList())
 
     Scaffold(
-
-        bottomBar = { BottomNavBar(navController) }
+        bottomBar = { BottomNavBar(navController) },
+        containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MainGreen)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(padding)
                 .padding(16.dp)
         ) {
 
-            // Screen Title Under TopBar
+            // Screen Title
             Text(
                 text = "My Events",
                 fontSize = 22.sp,
-                color = TextBlack,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(events) { event ->
-                    EventCard(event) {
-                        selectedEvent = event
-                    }
+                    EventCard(event) { selectedEvent = event }
                 }
             }
         }
     }
 
-    // Popup
+    // Popup shown when event is selected
     selectedEvent?.let { event ->
         EventDetailsPopup(
             event = event,
@@ -91,6 +86,7 @@ fun EventsListScreen(navController: NavController) {
 
 @Composable
 fun EventCard(event: Event, onClick: () -> Unit) {
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -103,31 +99,31 @@ fun EventCard(event: Event, onClick: () -> Unit) {
         Text(
             text = event.name,
             fontSize = 20.sp,
-            color = TextBlack
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Spacer(modifier = Modifier.height(10.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Filled.Schedule, contentDescription = null, tint = TextBlack)
+            Icon(Icons.Filled.Schedule, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(event.time, color = TextBlack)
+            Text(event.time, color = MaterialTheme.colorScheme.onSurface)
         }
 
         Spacer(modifier = Modifier.height(6.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Filled.Event, contentDescription = null, tint = TextBlack)
+            Icon(Icons.Filled.Event, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(event.date, color = TextBlack)
+            Text(event.date, color = MaterialTheme.colorScheme.onSurface)
         }
 
         Spacer(modifier = Modifier.height(6.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Filled.LocationOn, contentDescription = null, tint = TextBlack)
+            Icon(Icons.Filled.LocationOn, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(event.location, color = TextBlack)
+            Text(event.location, color = MaterialTheme.colorScheme.onSurface)
         }
     }
 }

@@ -1,12 +1,8 @@
 package com.example.myunievents.ui.screens
 
-import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,12 +11,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -45,14 +44,8 @@ import androidx.navigation.NavController
 import com.example.myunievents.R
 import com.example.myunievents.data.Event
 import com.example.myunievents.data.EventRepository
-import com.example.myunievents.ui.navigation.Screen
 import com.example.myunievents.ui.theme.ButtonRed
-import com.example.myunievents.ui.theme.HeaderGreen
-import com.example.myunievents.ui.theme.MainGreen
-import com.example.myunievents.ui.theme.TextBlack
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
-
 
 @Composable
 fun BookEventScreen(navController: NavController) {
@@ -66,24 +59,21 @@ fun BookEventScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
 
     Scaffold(
-
         bottomBar = { BottomNavBar(navController) },
-        containerColor = MainGreen,
+        containerColor = MaterialTheme.colorScheme.background,
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
 
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .imePadding()        // <-- KEY FIX: moves UI up when keyboard opens
+                .imePadding()
                 .padding(padding),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            item {
-                Spacer(modifier = Modifier.height(10.dp))
-            }
+            item { Spacer(modifier = Modifier.height(10.dp)) }
 
             // BACK BUTTON
             item {
@@ -110,7 +100,7 @@ fun BookEventScreen(navController: NavController) {
                     text = "BOOK EVENT",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    color = TextBlack,
+                    color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 10.dp),
@@ -142,6 +132,7 @@ fun BookEventScreen(navController: NavController) {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
 
+                    // Cancel
                     Button(
                         onClick = {
                             eventName = ""
@@ -153,13 +144,17 @@ fun BookEventScreen(navController: NavController) {
                         shape = RoundedCornerShape(30.dp),
                         modifier = Modifier.width(140.dp)
                     ) {
-                        Text("Cancel", color = TextBlack)
+                        Text("Cancel", color = MaterialTheme.colorScheme.onPrimary)
                     }
 
+                    // Save Event
                     Button(
                         onClick = {
-                            if (eventName.isBlank() || eventDate.isBlank() ||
-                                eventTime.isBlank() || eventLocation.isBlank()
+                            if (
+                                eventName.isBlank() ||
+                                eventDate.isBlank() ||
+                                eventTime.isBlank() ||
+                                eventLocation.isBlank()
                             ) {
                                 scope.launch {
                                     snackbarHostState.showSnackbar("Please fill all fields")
@@ -183,14 +178,12 @@ fun BookEventScreen(navController: NavController) {
                         shape = RoundedCornerShape(30.dp),
                         modifier = Modifier.width(140.dp)
                     ) {
-                        Text("Book Event", color = TextBlack)
+                        Text("Book Event", color = MaterialTheme.colorScheme.onPrimary)
                     }
                 }
             }
 
-            item {
-                Spacer(modifier = Modifier.height(40.dp))
-            }
+            item { Spacer(modifier = Modifier.height(40.dp)) }
 
             // FOOTER
             item {
@@ -200,11 +193,15 @@ fun BookEventScreen(navController: NavController) {
     }
 }
 
-
 @Composable
 fun LabeledTextField(label: String, value: String, onChange: (String) -> Unit) {
     Column {
-        Text(label, color = TextBlack, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+        Text(
+            label,
+            color = MaterialTheme.colorScheme.onBackground,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium
+        )
         OutlinedTextField(
             value = value,
             onValueChange = onChange,
@@ -219,7 +216,7 @@ fun FooterSection() {
         modifier = Modifier
             .fillMaxWidth()
             .height(140.dp)
-            .background(HeaderGreen)
+            .background(MaterialTheme.colorScheme.surface)
             .clip(
                 RoundedCornerShape(
                     topStart = 40.dp,
@@ -229,8 +226,15 @@ fun FooterSection() {
             .padding(22.dp)
     ) {
         Column {
-            Text("© 2025 TUS MyUniEvents App", color = TextBlack, fontWeight = FontWeight.Medium)
-            Text("Discover upcoming events and stay connected.", color = TextBlack)
+            Text(
+                "© 2025 TUS MyUniEvents App",
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.Medium
+            )
+            Text(
+                "Discover upcoming events and stay connected.",
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }

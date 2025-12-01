@@ -13,14 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,14 +30,13 @@ import androidx.navigation.NavController
 import com.example.myunievents.R
 import com.example.myunievents.ui.animations.FadeInContent
 import com.example.myunievents.ui.navigation.Screen
-import com.example.myunievents.ui.theme.MainGreen
-import com.example.myunievents.ui.theme.TextBlack
 
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    Scaffold(
+    val colors = MaterialTheme.colorScheme
 
+    Scaffold(
         bottomBar = { BottomNavBar(navController) }
     ) { padding ->
 
@@ -45,7 +44,7 @@ fun HomeScreen(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MainGreen)
+                    .background(colors.background)
                     .padding(padding)
                     .padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -55,7 +54,7 @@ fun HomeScreen(navController: NavController) {
                     text = "WELCOME TO MYUNIEVENTS",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    color = TextBlack,
+                    color = colors.onBackground,
                     modifier = Modifier.padding(bottom = 24.dp)
                 )
 

@@ -1,15 +1,24 @@
 package com.example.myunievents.ui.screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myunievents.data.Event
-import com.example.myunievents.ui.theme.*
+import com.example.myunievents.ui.theme.ButtonRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -17,7 +26,7 @@ fun EventDetailsPopup(event: Event, onClose: () -> Unit) {
 
     ModalBottomSheet(
         onDismissRequest = onClose,
-        containerColor = HeaderGreen,
+        containerColor = MaterialTheme.colorScheme.surface,
         shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
     ) {
 
@@ -31,14 +40,14 @@ fun EventDetailsPopup(event: Event, onClose: () -> Unit) {
             Text(
                 text = event.name,
                 fontSize = 22.sp,
-                color = TextBlack
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text("Date: ${event.date}", fontSize = 16.sp, color = TextBlack)
-            Text("Time: ${event.time}", fontSize = 16.sp, color = TextBlack)
-            Text("Location: ${event.location}", fontSize = 16.sp, color = TextBlack)
+            Text("Date: ${event.date}", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
+            Text("Time: ${event.time}", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
+            Text("Location: ${event.location}", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
 
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -48,7 +57,7 @@ fun EventDetailsPopup(event: Event, onClose: () -> Unit) {
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(25.dp)
             ) {
-                Text("Close", color = TextBlack)
+                Text("Close", color = MaterialTheme.colorScheme.onPrimary)
             }
         }
     }
