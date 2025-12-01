@@ -1,125 +1,141 @@
 package com.example.myunievents.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.myunievents.ui.theme.*
+import com.example.myunievents.R
+import com.example.myunievents.ui.animations.FadeInContent
 import com.example.myunievents.ui.navigation.Screen
+import com.example.myunievents.ui.theme.MainGreen
+import com.example.myunievents.ui.theme.TextBlack
 
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MainGreen)
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
+    Scaffold(
+        topBar = {
+            TopBar(
+                navController = navController,
+                currentScreen = Screen.Home
+            )
+        }
+    ) { padding ->
 
-            // HEADER
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp)
-                    .background(HeaderGreen)
-                    .clip(
-                        RoundedCornerShape(
-                            bottomStart = 40.dp,
-                            bottomEnd = 40.dp
-                        )
-                    )
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp, vertical = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                        Text("HOME", color = TextBlack, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                        Text("EVENTS", color = TextBlack, fontSize = 18.sp)
-                    }
-
-                    Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-                        Text(
-                            text = "PROFILE",
-                            color = TextBlack,
-                            fontSize = 16.sp,
-                            modifier = Modifier.clickable {
-                                navController.navigate(Screen.Profile.route)
-                            }
-                        )
-                        Text(
-                            text = "LOG OUT",
-                            color = TextBlack,
-                            fontSize = 16.sp,
-                            modifier = Modifier.clickable {
-                                navController.navigate(Screen.Login.route) {
-                                    popUpTo(Screen.Home.route) { inclusive = true }
-                                }
-                            }
-                        )
-                    }
-                }
-            }
-
-            // MAIN CONTENT
+        FadeInContent {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 60.dp),
+                    .background(MainGreen)
+                    .padding(padding)
+                    .padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
+                // Title
                 Text(
-                    text = "WELCOME TO MYUNIEVENTS APP",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = TextBlack
+                    text = "WELCOME TO MYUNIEVENTS",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextBlack,
+                    modifier = Modifier.padding(bottom = 24.dp)
                 )
 
-                Spacer(modifier = Modifier.height(80.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                // --- MY EVENTS CARD ---
+                FeatureCard(
+                    imageRes = R.drawable.event_banner,   // Your image
+                    title = "My Events"
                 ) {
+                    navController.navigate(Screen.MyEvents.route)
+                }
 
-                    Button(
-                        onClick = { navController.navigate(Screen.MyEvents.route) }, // FIXED
-                        colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
-                        modifier = Modifier
-                            .width(180.dp)
-                            .height(60.dp)
-                    ) {
-                        Text("TRACK EVENTS", color = TextBlack)
-                    }
+                Spacer(modifier = Modifier.height(24.dp))
 
-                    Button(
-                        onClick = { navController.navigate(Screen.BookEvent.route) },
-                        colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
-                        modifier = Modifier
-                            .width(180.dp)
-                            .height(60.dp)
-                    ) {
-                        Text("BOOK EVENT", color = TextBlack)
-                    }
+                // --- BOOK EVENT CARD ---
+                FeatureCard(
+                    imageRes = R.drawable.booking_banner,   // Your image
+                    title = "Book Event"
+                ) {
+                    navController.navigate(Screen.BookEvent.route)
                 }
             }
         }
     }
 }
+
+@Composable
+fun FeatureCard(imageRes: Int, title: String, onClick: () -> Unit) {
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(22.dp),
+        elevation = CardDefaults.cardElevation(10.dp)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+
+            // Background image
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = title,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            // Gradient overlay (improves text readability)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(80.dp)
+                    .align(Alignment.BottomCenter)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                Color.Black.copy(alpha = 0.45f)
+                            )
+                        )
+                    )
+            )
+
+            // Title Text
+            Text(
+                text = title,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(16.dp)
+            )
+        }
+    }
+}
+
