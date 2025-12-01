@@ -1,31 +1,30 @@
 package com.example.myunievents.firebase
 
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.tasks.await
 
 object AuthManager {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    fun register(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onResult(true, null)
-                } else {
-                    onResult(false, task.exception?.message)
-                }
-            }
+    // SUSPEND REGISTER
+    suspend fun register(email: String, password: String): Result<Unit> {
+        return try {
+            auth.createUserWithEmailAndPassword(email, password).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
-    fun login(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onResult(true, null)
-                } else {
-                    onResult(false, task.exception?.message)
-                }
-            }
+    // SUSPEND LOGIN
+    suspend fun login(email: String, password: String): Result<Unit> {
+        return try {
+            auth.signInWithEmailAndPassword(email, password).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     fun logout() {
