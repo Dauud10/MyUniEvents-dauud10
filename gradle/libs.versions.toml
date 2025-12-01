@@ -2,16 +2,18 @@
 agp = "8.10.1"
 kotlin = "2.0.21"
 
-# AndroidX versions compatible with compileSdk 34–35
 coreKtx = "1.12.0"
 lifecycleRuntimeKtx = "2.6.2"
 activityCompose = "1.8.2"
-composeBom = "2023.10.01"
+
+
+composeBom = "2024.12.00"
 
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 googleServices = "4.4.2"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

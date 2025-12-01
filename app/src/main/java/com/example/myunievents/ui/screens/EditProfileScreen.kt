@@ -1,27 +1,36 @@
 package com.example.myunievents.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.myunievents.ui.navigation.Screen
-import com.example.myunievents.ui.theme.*
+import com.example.myunievents.firebase.AuthManager
+import com.example.myunievents.ui.theme.ButtonRed
+import com.example.myunievents.ui.theme.MainGreen
+import com.example.myunievents.ui.theme.TextBlack
+import com.example.myunievents.ui.theme.TextWhite
+import kotlinx.coroutines.launch
 
 @Composable
 fun EditProfileScreen(navController: NavController) {
 
-    var name by remember { mutableStateOf("") }
+    val user = AuthManager.currentUser()
+    var displayName by remember { mutableStateOf(user?.displayName ?: "") }
+    var newPassword by remember { mutableStateOf("") }
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     Scaffold(
-
         containerColor = MainGreen,
-        bottomBar = { BottomNavBar(navController) }
+        bottomBar = { BottomNavBar(navController) },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
 
         Column(
@@ -42,10 +51,22 @@ fun EditProfileScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // Display name
             OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
+                value = displayName,
+                onValueChange = { displayName = it },
                 label = { Text("Display Name") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // New password (optional)
+            OutlinedTextField(
+                value = newPassword,
+                onValueChange = { newPassword = it },
+                label = { Text("New Password (optional)") },
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -53,15 +74,36 @@ fun EditProfileScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    // In Week 4 you can save to Firebase here
-                    navController.popBackStack()
+                    scope.launch {
+                        var hadError = false
+
+                        // Update display name
+                        val nameResult = AuthManager.updateDisplayName(displayName)
+                        if (nameResult.isFailure) {
+                            hadError = true
+                        }
+
+                        // Update password if entered
+                        if (newPassword.isNotBlank()) {
+                            val passResult = AuthManager.updatePassword(newPassword)
+                            if (passResult.isFailure) {
+                                hadError = true
+                            }
+                        }
+
+                        if (hadError) {
+                            snackbarHostState.showSnackbar("Error updating profile")
+                        } else {
+                            snackbarHostState.showSnackbar("Profile updated")
+                            navController.popBackStack()
+                        }
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
             ) {
-                Text("Save", color = TextBlack)
+                Text("Save", color = TextWhite)
             }
         }
     }

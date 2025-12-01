@@ -1,6 +1,7 @@
 package com.example.myunievents.firebase
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 
 object AuthManager {
@@ -32,4 +33,29 @@ object AuthManager {
     }
 
     fun currentUser() = auth.currentUser
+
+    // 🔧 NEW: update display name
+    suspend fun updateDisplayName(newName: String): Result<Unit> {
+        val user = auth.currentUser ?: return Result.failure(IllegalStateException("No user logged in"))
+        return try {
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setDisplayName(newName)
+                .build()
+            user.updateProfile(profileUpdates).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    // 🔧 NEW: update password
+    suspend fun updatePassword(newPassword: String): Result<Unit> {
+        val user = auth.currentUser ?: return Result.failure(IllegalStateException("No user logged in"))
+        return try {
+            user.updatePassword(newPassword).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
