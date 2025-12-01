@@ -1,37 +1,31 @@
 [versions]
-agp = "8.10.1"
+agp = "8.3.2"
 kotlin = "2.0.21"
 
-coreKtx = "1.12.0"
-lifecycleRuntimeKtx = "2.6.2"
-activityCompose = "1.8.2"
+coreKtx = "1.13.1"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.9.3"
 
-# Stable Google Compose BOM
-composeBom = "2024.09.01"
+# Latest stable Jetpack Compose BOM (2025)
+composeBom = "2024.10.00"
 
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+
 googleServices = "4.4.2"
-
-room = "2.6.1"
-navigation = "2.7.7"
-
-firebaseBom = "33.5.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 
-# Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
-# Lifecycle + Compose Activity
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 
-# Compose BOM + modules (all versionless)
+# Compose BOM controls versions for all Compose libs
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -40,27 +34,8 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
-# Material 3 (version comes from BOM)
+# Material3 uses version from BOM — no version needed
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-
-# Basic foundation (Row, Column, Box, Modifier.size)
-androidx-foundation = { group = "androidx.compose.foundation", name = "foundation" }
-
-# rememberSaveable
-androidx-runtime-saveable = { group = "androidx.compose.runtime", name = "runtime-saveable" }
-
-# Navigation Compose
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
-
-# Room
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
-
-# Firebase
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

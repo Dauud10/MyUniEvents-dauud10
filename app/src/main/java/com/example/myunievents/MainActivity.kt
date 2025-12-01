@@ -19,11 +19,15 @@ import com.example.myunievents.ui.screens.LoginScreen
 import com.example.myunievents.ui.screens.ProfileScreen
 import com.example.myunievents.ui.screens.RegisterScreen
 import com.example.myunievents.ui.theme.MyUniEventsTheme
+import com.example.myunievents.data.AppDatabase
+
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppDatabase.getDatabase(applicationContext)
 
         setContent {
 
