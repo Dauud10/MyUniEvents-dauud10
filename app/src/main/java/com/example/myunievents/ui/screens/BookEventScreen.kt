@@ -3,10 +3,31 @@ package com.example.myunievents.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +60,12 @@ fun BookEventScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
 
     Scaffold(
+        topBar = {
+            TopBar(
+                navController = navController,
+                currentScreen = Screen.BookEvent
+            )
+        },
         containerColor = MainGreen,
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
@@ -49,57 +76,9 @@ fun BookEventScreen(navController: NavController) {
                 .padding(padding)
         ) {
 
-            // ---------- HEADER ----------
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp)
-                    .background(HeaderGreen)
-                    .clip(
-                        RoundedCornerShape(
-                            bottomStart = 40.dp,
-                            bottomEnd = 40.dp
-                        )
-                    )
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp, vertical = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        "EVENTS",
-                        color = TextBlack,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp
-                    )
+            Spacer(modifier = Modifier.height(10.dp))
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
-                        Text(
-                            text = "PROFILE",
-                            color = TextBlack,
-                            modifier = Modifier.clickable {
-                                navController.navigate(Screen.Profile.route)
-                            }
-                        )
-                        Text(
-                            text = "LOG OUT",
-                            color = TextBlack,
-                            modifier = Modifier.clickable {
-                                navController.navigate(Screen.Login.route) {
-                                    popUpTo(Screen.BookEvent.route) { inclusive = true }
-                                }
-                            }
-                        )
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // ---------- BACK BUTTON ----------
+            // BACK BUTTON
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -116,7 +95,7 @@ fun BookEventScreen(navController: NavController) {
                 )
             }
 
-            // ---------- TITLE ----------
+            // TITLE
             Text(
                 text = "BOOK EVENT",
                 fontSize = 22.sp,
@@ -128,7 +107,7 @@ fun BookEventScreen(navController: NavController) {
                 textAlign = TextAlign.Center
             )
 
-            // ---------- FORM ----------
+            // FORM
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -143,13 +122,12 @@ fun BookEventScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            // ---------- BUTTON ROW ----------
+            // BUTTONS
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                // CANCEL BUTTON
                 Button(
                     onClick = {
                         eventName = ""
@@ -164,7 +142,6 @@ fun BookEventScreen(navController: NavController) {
                     Text("Cancel", color = TextBlack)
                 }
 
-                // BOOK EVENT BUTTON (SAVE TO ROOM)
                 Button(
                     onClick = {
                         if (eventName.isBlank() || eventDate.isBlank() ||
@@ -198,7 +175,7 @@ fun BookEventScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // ---------- FOOTER ----------
+            // FOOTER
             FooterSection()
         }
     }
