@@ -1,15 +1,32 @@
 package com.example.myunievents.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -83,17 +100,20 @@ fun LoginScreen(navController: NavController) {
                 Button(
                     onClick = {
                         if (email.isBlank() || password.isBlank()) {
-                            scope.launch { snackbarHostState.showSnackbar("Please fill all fields") }
+                            scope.launch {
+                                snackbarHostState.showSnackbar("Please fill all fields")
+                            }
                         } else {
-                            AuthManager.login(email, password) { success, error ->
-                                if (success) {
+                            scope.launch {
+                                val result = AuthManager.login(email, password)
+                                if (result.isSuccess) {
                                     navController.navigate(Screen.Home.route) {
                                         popUpTo(Screen.Login.route) { inclusive = true }
                                     }
                                 } else {
-                                    scope.launch {
-                                        snackbarHostState.showSnackbar(error ?: "Login failed")
-                                    }
+                                    snackbarHostState.showSnackbar(
+                                        result.exceptionOrNull()?.message ?: "Login failed"
+                                    )
                                 }
                             }
                         }
