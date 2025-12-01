@@ -3,6 +3,9 @@ package com.example.myunievents.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,8 +40,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.rememberScrollState
 import androidx.navigation.NavController
 import com.example.myunievents.R
 import com.example.myunievents.data.Event
@@ -49,6 +50,7 @@ import com.example.myunievents.ui.theme.HeaderGreen
 import com.example.myunievents.ui.theme.MainGreen
 import com.example.myunievents.ui.theme.TextBlack
 import kotlinx.coroutines.launch
+
 
 @Composable
 fun BookEventScreen(navController: NavController) {
@@ -62,127 +64,140 @@ fun BookEventScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
 
     Scaffold(
-        topBar = {
-            TopBar(
-                navController = navController,
-                currentScreen = Screen.BookEvent
-            )
-        },
+
+        bottomBar = { BottomNavBar(navController) },
         containerColor = MainGreen,
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(padding)
+                .imePadding()        // <-- KEY FIX: moves UI up when keyboard opens
+                .padding(padding),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(10.dp))
+            item {
+                Spacer(modifier = Modifier.height(10.dp))
+            }
 
             // BACK BUTTON
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 30.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_back),
-                    contentDescription = "Back",
-                    colorFilter = ColorFilter.tint(ButtonRed),
+            item {
+                Row(
                     modifier = Modifier
-                        .size(42.dp)
-                        .clickable { navController.popBackStack() }
-                )
+                        .fillMaxWidth()
+                        .padding(horizontal = 30.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_back),
+                        contentDescription = "Back",
+                        colorFilter = ColorFilter.tint(ButtonRed),
+                        modifier = Modifier
+                            .size(42.dp)
+                            .clickable { navController.popBackStack() }
+                    )
+                }
             }
 
             // TITLE
-            Text(
-                text = "BOOK EVENT",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                color = TextBlack,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
-                textAlign = TextAlign.Center
-            )
-
-            // FORM
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 30.dp),
-                verticalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
-                LabeledTextField(label = "Select Event:", value = eventName) { eventName = it }
-                LabeledTextField(label = "Select Date:", value = eventDate) { eventDate = it }
-                LabeledTextField(label = "Select Time:", value = eventTime) { eventTime = it }
-                LabeledTextField(label = "Location:", value = eventLocation) { eventLocation = it }
+            item {
+                Text(
+                    text = "BOOK EVENT",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextBlack,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp),
+                    textAlign = TextAlign.Center
+                )
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            // FORM FIELDS
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 30.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
+                ) {
+                    LabeledTextField("Select Event:", eventName) { eventName = it }
+                    LabeledTextField("Select Date:", eventDate) { eventDate = it }
+                    LabeledTextField("Select Time:", eventTime) { eventTime = it }
+                    LabeledTextField("Location:", eventLocation) { eventLocation = it }
+                }
+            }
 
             // BUTTONS
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-
-                Button(
-                    onClick = {
-                        eventName = ""
-                        eventDate = ""
-                        eventTime = ""
-                        eventLocation = ""
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
-                    shape = RoundedCornerShape(30.dp),
-                    modifier = Modifier.width(140.dp)
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 30.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text("Cancel", color = TextBlack)
-                }
 
-                Button(
-                    onClick = {
-                        if (eventName.isBlank() || eventDate.isBlank() ||
-                            eventTime.isBlank() || eventLocation.isBlank()
-                        ) {
-                            scope.launch {
-                                snackbarHostState.showSnackbar("Please fill all fields")
-                            }
-                        } else {
-                            val newEvent = Event(
-                                name = eventName,
-                                date = eventDate,
-                                time = eventTime,
-                                location = eventLocation
-                            )
+                    Button(
+                        onClick = {
+                            eventName = ""
+                            eventDate = ""
+                            eventTime = ""
+                            eventLocation = ""
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
+                        shape = RoundedCornerShape(30.dp),
+                        modifier = Modifier.width(140.dp)
+                    ) {
+                        Text("Cancel", color = TextBlack)
+                    }
 
-                            scope.launch {
-                                EventRepository.insertEvent(newEvent)
-                                snackbarHostState.showSnackbar("Event booked!")
-                                navController.popBackStack()
+                    Button(
+                        onClick = {
+                            if (eventName.isBlank() || eventDate.isBlank() ||
+                                eventTime.isBlank() || eventLocation.isBlank()
+                            ) {
+                                scope.launch {
+                                    snackbarHostState.showSnackbar("Please fill all fields")
+                                }
+                            } else {
+                                val newEvent = Event(
+                                    name = eventName,
+                                    date = eventDate,
+                                    time = eventTime,
+                                    location = eventLocation
+                                )
+
+                                scope.launch {
+                                    EventRepository.insertEvent(newEvent)
+                                    snackbarHostState.showSnackbar("Event booked!")
+                                    navController.popBackStack()
+                                }
                             }
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
-                    shape = RoundedCornerShape(30.dp),
-                    modifier = Modifier.width(140.dp)
-                ) {
-                    Text("Book Event", color = TextBlack)
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
+                        shape = RoundedCornerShape(30.dp),
+                        modifier = Modifier.width(140.dp)
+                    ) {
+                        Text("Book Event", color = TextBlack)
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(40.dp))
+            item {
+                Spacer(modifier = Modifier.height(40.dp))
+            }
 
             // FOOTER
-            FooterSection()
+            item {
+                FooterSection()
+            }
         }
     }
 }
+
 
 @Composable
 fun LabeledTextField(label: String, value: String, onChange: (String) -> Unit) {

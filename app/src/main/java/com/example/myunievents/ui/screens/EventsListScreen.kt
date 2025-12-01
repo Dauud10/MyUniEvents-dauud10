@@ -50,12 +50,8 @@ fun EventsListScreen(navController: NavController) {
         .collectAsState(initial = emptyList())
 
     Scaffold(
-        topBar = {
-            TopBar(
-                navController = navController,
-                currentScreen = Screen.MyEvents
-            )
-        }
+
+        bottomBar = { BottomNavBar(navController) }
     ) { padding ->
 
         Column(

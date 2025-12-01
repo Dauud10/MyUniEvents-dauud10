@@ -56,12 +56,7 @@ fun ProfileScreen(navController: NavController) {
     var darkMode by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
-        topBar = {
-            TopBar(
-                navController = navController,
-                currentScreen = Screen.Profile
-            )
-        },
+
         containerColor = MainGreen,
         bottomBar = {
             BottomNavBar(navController)

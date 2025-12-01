@@ -37,12 +37,8 @@ import com.example.myunievents.ui.theme.TextBlack
 fun HomeScreen(navController: NavController) {
 
     Scaffold(
-        topBar = {
-            TopBar(
-                navController = navController,
-                currentScreen = Screen.Home
-            )
-        }
+
+        bottomBar = { BottomNavBar(navController) }
     ) { padding ->
 
         FadeInContent {
@@ -55,7 +51,6 @@ fun HomeScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                // Title
                 Text(
                     text = "WELCOME TO MYUNIEVENTS",
                     fontSize = 22.sp,
@@ -64,9 +59,8 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.padding(bottom = 24.dp)
                 )
 
-                // --- MY EVENTS CARD ---
                 FeatureCard(
-                    imageRes = R.drawable.event_banner,   // Your image
+                    imageRes = R.drawable.event_banner,
                     title = "My Events"
                 ) {
                     navController.navigate(Screen.MyEvents.route)
@@ -74,9 +68,8 @@ fun HomeScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // --- BOOK EVENT CARD ---
                 FeatureCard(
-                    imageRes = R.drawable.booking_banner,   // Your image
+                    imageRes = R.drawable.booking_banner,
                     title = "Book Event"
                 ) {
                     navController.navigate(Screen.BookEvent.route)
@@ -85,6 +78,7 @@ fun HomeScreen(navController: NavController) {
         }
     }
 }
+
 
 @Composable
 fun FeatureCard(imageRes: Int, title: String, onClick: () -> Unit) {

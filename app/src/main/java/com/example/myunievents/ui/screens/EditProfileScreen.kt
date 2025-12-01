@@ -19,13 +19,9 @@ fun EditProfileScreen(navController: NavController) {
     var name by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = {
-            TopBar(
-                navController = navController,
-                currentScreen = Screen.EditProfile
-            )
-        },
-        containerColor = MainGreen
+
+        containerColor = MainGreen,
+        bottomBar = { BottomNavBar(navController) }
     ) { padding ->
 
         Column(
