@@ -3,18 +3,22 @@ package com.example.myunievents
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.myunievents.ui.screens.ProfileScreen
-import com.example.myunievents.ui.navigation.Screen
-import com.example.myunievents.ui.screens.*
-import com.example.myunievents.ui.theme.MyUniEventsTheme
 import com.example.myunievents.data.AppDatabase
-import com.example.myunievents.data.EventRepository
+import com.example.myunievents.ui.navigation.Screen
+import com.example.myunievents.ui.screens.BookEventScreen
+import com.example.myunievents.ui.screens.EditProfileScreen
+import com.example.myunievents.ui.screens.EventsListScreen
+import com.example.myunievents.ui.screens.HomeScreen
+import com.example.myunievents.ui.screens.LoginScreen
+import com.example.myunievents.ui.screens.ProfileScreen
+import com.example.myunievents.ui.screens.RegisterScreen
+import com.example.myunievents.ui.theme.MyUniEventsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +26,6 @@ class MainActivity : ComponentActivity() {
 
         // Initialize ROOM + Repository
         val database = AppDatabase.getDatabase(this)
-        EventRepository.initialize(database.eventDao())
 
         setContent { MyUniEventsApp() }
     }
@@ -45,6 +48,7 @@ fun MyUniEventsApp() {
                 composable(Screen.MyEvents.route)    { EventsListScreen(navController) }
                 composable(Screen.BookEvent.route)   { BookEventScreen(navController) }
                 composable(Screen.Profile.route)     { ProfileScreen(navController) }
+                composable(Screen.EditProfile.route)     { EditProfileScreen(navController) }
             }
         }
     }
