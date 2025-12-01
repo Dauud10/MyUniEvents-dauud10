@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.myunievents.ui.navigation.Screen
 import com.example.myunievents.ui.theme.*
 
 @Composable
@@ -18,6 +19,12 @@ fun EditProfileScreen(navController: NavController) {
     var name by remember { mutableStateOf("") }
 
     Scaffold(
+        topBar = {
+            TopBar(
+                navController = navController,
+                currentScreen = Screen.EditProfile
+            )
+        },
         containerColor = MainGreen
     ) { padding ->
 
@@ -25,11 +32,17 @@ fun EditProfileScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(24.dp),
+                .padding(horizontal = 24.dp, vertical = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text("EDIT PROFILE", fontSize = 22.sp, color = TextBlack)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = "EDIT PROFILE",
+                fontSize = 22.sp,
+                color = TextBlack
+            )
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -44,12 +57,16 @@ fun EditProfileScreen(navController: NavController) {
 
             Button(
                 onClick = {
+                    // In Week 4 you can save to Firebase here
                     navController.popBackStack()
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
-            ) { Text("Save", color = TextBlack) }
+            ) {
+                Text("Save", color = TextBlack)
+            }
         }
     }
 }
