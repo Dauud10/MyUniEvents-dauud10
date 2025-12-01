@@ -7,4 +7,6 @@ sealed class Screen(val route: String) {
     data object BookEvent : Screen("book_event")
     data object MyEvents : Screen("my_events")
     data object Profile : Screen("profile")
+    data object EditProfile : Screen("edit_profile")
+
 }
